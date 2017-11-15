@@ -6,7 +6,8 @@ import { plus,
   getBroadcastAddress,
   getUsableNetworkIPRange,
   getNumberOfHost,
-  getUsableNumberOfHost } from './helper';
+  getUsableNumberOfHost,
+  getWildCardMask } from './helper';
 
 describe('test plus', () => {
   it('should plus number', () => {
@@ -71,6 +72,7 @@ describe('test getBroadcastAddress', () => {
 
 describe('test get useable host ip', () => {
   it('should get useable host ip', () => {
+    expect(getUsableNetworkIPRange('0.108.12.34', 30)).to.equal('0.108.12.33 - 0.108.12.34')    
     expect(getUsableNetworkIPRange('158.108.12.34', 30)).to.equal('158.108.12.33 - 158.108.12.34')
     expect(getUsableNetworkIPRange('158.108.12.34', 28)).to.equal('158.108.12.33 - 158.108.12.46') 
     expect(getUsableNetworkIPRange('158.108.12.34', 24)).to.equal('158.108.12.1 - 158.108.12.254')
@@ -101,5 +103,17 @@ describe('test get number of total useable host', () => {
     expect(getUsableNumberOfHost(num1)).to.equal(0)
     expect(getUsableNumberOfHost(num2)).to.equal(0)
     expect(getUsableNumberOfHost(num3)).to.equal(254)
+  })
+})
+
+describe('getWildCardMask', () => {
+  it('should correct wild card mask', () => {
+    expect(getWildCardMask(1)).to.equal('127.255.255.255')
+    expect(getWildCardMask(8)).to.equal('0.255.255.255')
+    expect(getWildCardMask(16)).to.equal('0.0.255.255')        
+    expect(getWildCardMask(24)).to.equal('0.0.0.255')
+    expect(getWildCardMask(28)).to.equal('0.0.0.15')
+    expect(getWildCardMask(31)).to.equal('0.0.0.1')
+    expect(getWildCardMask(32)).to.equal('0.0.0.0')        
   })
 })

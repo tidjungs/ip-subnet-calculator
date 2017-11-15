@@ -5,12 +5,14 @@ export const convertToSubnet = n =>
     parseInt(('1'.repeat(n) + '0'.repeat(32 - n)
   ).substr(i, 8), 2)).join('.');
 
-
 const map = { 'ANY': 0, 'A': 7, 'B': 15, 'C': 23 }
 export const generateSubnetByClass = c => 
   new Array(32 - map[c]).fill(0).map(
     (number, index) => convertToSubnet(index+1+map[c]) + ' / ' + (index+1+map[c]))
 
+/*
+    encoder and decoder
+*/
 const encodeIP = ip => 
   ip.split('.')
   .map(n => '0'.repeat(8 - (+n).toString(2).length) + (+n).toString(2))
@@ -18,7 +20,8 @@ const encodeIP = ip =>
 
 const decodeIP = ip => {
   const buffer = new Array(4).fill(0);
-  return buffer.map((b, index) => parseInt(ip.substr(index*8, 8), 2)).join('.');
+  const ip32bit = '0'.repeat(32 - ip.length) + ip;
+  return buffer.map((b, index) => parseInt(ip32bit.substr(index*8, 8), 2)).join('.');
 }
 
 export const getNetWorkAddress = (ip, subnet) => {
@@ -56,7 +59,6 @@ export const getUsableNetworkIPRange = (ip, subnet) => {
   if (useableTotalHost === 0) {
     return 'None';
   }
-
   const address = parseInt(encodeIP(
     getNetWorkAddress(ip, subnet)
   ), 2);
@@ -65,3 +67,6 @@ export const getUsableNetworkIPRange = (ip, subnet) => {
   ), 2);
   return decodeIP((address+1).toString(2)) + ' - ' + decodeIP((broadcast-1).toString(2));
 }
+
+export const getWildCardMask = n => decodeIP((~parseInt(encodeIP(convertToSubnet(n)), 2)).toString(2))
+
