@@ -36,3 +36,25 @@ export const getBroadcastAddress = (ip, subnet) => {
     .join('')
   return decodeIP(a);      
 }
+
+export const getNumberOfHost = (ip, subnet) => {
+  const address = encodeIP(
+    getNetWorkAddress(ip, subnet)
+  );
+  const broadcast = encodeIP(
+    getBroadcastAddress(ip, subnet)
+  );
+  return parseInt(broadcast, 2) - parseInt(address, 2) + 1;
+}
+
+export const getUsableNumberOfHost = numberOfHost => 
+  numberOfHost === 1 ? 0 : numberOfHost - 2;
+
+export const getUsableNetworkIPRange = (ip, subnet) => {
+  const address = getNetWorkAddress(ip, subnet);
+  const broadcast = getBroadcastAddress(ip, subnet);
+  if (address === broadcast) {
+    return false;
+  } else if (address)
+  console.log()
+}
