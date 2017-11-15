@@ -1,5 +1,9 @@
 import { expect } from 'chai';
-import { plus, convertToSubnet, generateSubnetByClass, getNetWorkAddress } from './helper';
+import { plus, 
+  convertToSubnet,
+  generateSubnetByClass,
+  getNetWorkAddress,
+  getBroadcastAddress } from './helper';
 
 describe('test plus', () => {
   it('should plus number', () => {
@@ -41,11 +45,22 @@ describe('test generateSubnetByClass', () => {
 })
 
 describe('test getNetWorkAddress', () => {
-  it('should generate network address', () => {
+  it('should get network address', () => {
     expect(getNetWorkAddress('158.108.12.34', 1)).to.equal('128.0.0.0')    
     expect(getNetWorkAddress('158.108.12.34', 8)).to.equal('158.0.0.0')        
     expect(getNetWorkAddress('158.108.12.34', 16)).to.equal('158.108.0.0')    
     expect(getNetWorkAddress('158.108.12.34', 24)).to.equal('158.108.12.0')
     expect(getNetWorkAddress('158.108.12.34', 28)).to.equal('158.108.12.32')        
+  })
+})
+
+
+describe('test getBroadcastAddress', () => {
+  it('should get broadcast address', () => {
+    expect(getBroadcastAddress('158.108.12.34', 1)).to.equal('255.255.255.255')    
+    expect(getBroadcastAddress('158.108.12.34', 8)).to.equal('158.255.255.255')        
+    expect(getBroadcastAddress('158.108.12.34', 16)).to.equal('158.108.255.255')    
+    expect(getBroadcastAddress('158.108.12.34', 24)).to.equal('158.108.12.255')
+    expect(getBroadcastAddress('158.108.12.34', 28)).to.equal('158.108.12.47')        
   })
 })

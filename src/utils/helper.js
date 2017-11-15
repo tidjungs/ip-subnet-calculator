@@ -29,3 +29,10 @@ export const getNetWorkAddress = (ip, subnet) => {
   return decodeIP(a);      
 }
 
+export const getBroadcastAddress = (ip, subnet) => {
+  const a = encodeIP(ip)
+    .split('')
+    .map((digit, index) => index < subnet ? digit : '1')
+    .join('')
+  return decodeIP(a);      
+}
