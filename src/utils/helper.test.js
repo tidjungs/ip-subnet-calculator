@@ -8,7 +8,8 @@ import { plus,
   getNumberOfHost,
   getUsableNumberOfHost,
   getWildCardMask,
-  getBinarySubnetMask } from './helper';
+  getBinarySubnetMask,
+  getIPClass } from './helper';
 
 describe('test plus', () => {
   it('should plus number', () => {
@@ -124,5 +125,14 @@ describe('getBinarySubnetMask', () => {
     expect(getBinarySubnetMask(16)).to.equal('11111111.11111111.00000000.00000000')
     expect(getBinarySubnetMask(24)).to.equal('11111111.11111111.11111111.00000000')
     expect(getBinarySubnetMask(28)).to.equal('11111111.11111111.11111111.11110000')
+  })
+})
+
+describe('getIPClass', () => {
+  it('should correct class', () => {
+    expect(getIPClass(1)).to.equal('None')
+    expect(getIPClass(8)).to.equal('A')
+    expect(getIPClass(16)).to.equal('B')
+    expect(getIPClass(24)).to.equal('C')    
   })
 })

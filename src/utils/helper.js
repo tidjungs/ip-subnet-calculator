@@ -75,3 +75,9 @@ export const getBinarySubnetMask = n =>
     encodeIP(convertToSubnet(n)).substr(index*8, 8)
   ).join('.');
 
+export const getIPClass = n => {
+  if (n < 8) return 'None';
+  else if (n < 16) return 'A';
+  else if (n < 24) return 'B';
+  return 'C';
+}
