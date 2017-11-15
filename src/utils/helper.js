@@ -51,10 +51,17 @@ export const getUsableNumberOfHost = numberOfHost =>
   numberOfHost === 1 ? 0 : numberOfHost - 2;
 
 export const getUsableNetworkIPRange = (ip, subnet) => {
-  const address = getNetWorkAddress(ip, subnet);
-  const broadcast = getBroadcastAddress(ip, subnet);
-  if (address === broadcast) {
-    return false;
-  } else if (address)
-  console.log()
+  const totalHost = getNumberOfHost(ip, subnet);
+  const useableTotalHost = getUsableNumberOfHost(totalHost);
+  if (useableTotalHost === 0) {
+    return 'None';
+  }
+
+  const address = parseInt(encodeIP(
+    getNetWorkAddress(ip, subnet)
+  ), 2);
+  const broadcast = parseInt(encodeIP(
+    getBroadcastAddress(ip, subnet)
+  ), 2);
+  return decodeIP((address+1).toString(2)) + ' - ' + decodeIP((broadcast-1).toString(2));
 }

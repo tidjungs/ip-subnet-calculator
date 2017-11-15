@@ -4,6 +4,7 @@ import { plus,
   generateSubnetByClass,
   getNetWorkAddress,
   getBroadcastAddress,
+  getUsableNetworkIPRange,
   getNumberOfHost,
   getUsableNumberOfHost } from './helper';
 
@@ -70,7 +71,11 @@ describe('test getBroadcastAddress', () => {
 
 describe('test get useable host ip', () => {
   it('should get useable host ip', () => {
-    getNumberOfHost('158.108.12.34', 32)
+    expect(getUsableNetworkIPRange('158.108.12.34', 30)).to.equal('158.108.12.33 - 158.108.12.34')
+    expect(getUsableNetworkIPRange('158.108.12.34', 28)).to.equal('158.108.12.33 - 158.108.12.46') 
+    expect(getUsableNetworkIPRange('158.108.12.34', 24)).to.equal('158.108.12.1 - 158.108.12.254')
+    expect(getUsableNetworkIPRange('158.108.12.34', 16)).to.equal('158.108.0.1 - 158.108.255.254')     
+    expect(getUsableNetworkIPRange('158.108.12.34', 8)).to.equal('158.0.0.1 - 158.255.255.254')    
   })
 })
 
