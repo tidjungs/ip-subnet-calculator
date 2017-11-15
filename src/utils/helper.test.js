@@ -7,7 +7,8 @@ import { plus,
   getUsableNetworkIPRange,
   getNumberOfHost,
   getUsableNumberOfHost,
-  getWildCardMask } from './helper';
+  getWildCardMask,
+  getBinarySubnetMask } from './helper';
 
 describe('test plus', () => {
   it('should plus number', () => {
@@ -115,5 +116,13 @@ describe('getWildCardMask', () => {
     expect(getWildCardMask(28)).to.equal('0.0.0.15')
     expect(getWildCardMask(31)).to.equal('0.0.0.1')
     expect(getWildCardMask(32)).to.equal('0.0.0.0')        
+  })
+})
+
+describe('getBinarySubnetMask', () => {
+  it('should correct binary', () => {
+    expect(getBinarySubnetMask(16)).to.equal('11111111.11111111.00000000.00000000')
+    expect(getBinarySubnetMask(24)).to.equal('11111111.11111111.11111111.00000000')
+    expect(getBinarySubnetMask(28)).to.equal('11111111.11111111.11111111.11110000')
   })
 })

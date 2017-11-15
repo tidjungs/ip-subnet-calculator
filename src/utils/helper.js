@@ -70,3 +70,8 @@ export const getUsableNetworkIPRange = (ip, subnet) => {
 
 export const getWildCardMask = n => decodeIP((~parseInt(encodeIP(convertToSubnet(n)), 2)).toString(2))
 
+export const getBinarySubnetMask = n =>
+  new Array(4).fill(0).map((b, index) => 
+    encodeIP(convertToSubnet(n)).substr(index*8, 8)
+  ).join('.');
+
