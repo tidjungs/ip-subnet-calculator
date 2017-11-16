@@ -1,0 +1,9 @@
+.container {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.ant-input {
+  width: 200px;
+  margin: 16px 16px 16px 16px;
+}

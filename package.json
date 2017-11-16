@@ -6,10 +6,11 @@
     "react-scripts": "1.0.17"
   },
   "dependencies": {
+    "antd": "^2.13.10",
     "chai": "^4.1.2",
-    "grommet": "^1.9.0",
     "react": "^16.1.1",
-    "react-dom": "^16.1.1"
+    "react-dom": "^16.1.1",
+    "react-typist": "^2.0.4"
   },
   "scripts": {
     "start": "react-scripts start",
