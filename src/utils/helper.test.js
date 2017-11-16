@@ -9,7 +9,8 @@ import { plus,
   getUsableNumberOfHost,
   getWildCardMask,
   getBinarySubnetMask,
-  getIPClass } from './helper';
+  getIPClass,
+  isPrivate } from './helper';
 
 describe('test plus', () => {
   it('should plus number', () => {
@@ -139,6 +140,12 @@ describe('getIPClass', () => {
 
 describe('private ip', () => {
   it('should correct private ip', () => {
-    
+    expect(isPrivate('0.0.0.0')).to.equal(false)
+    expect(isPrivate('158.108.1.1')).to.equal(false)        
+    expect(isPrivate('172.16.0.1')).to.equal(true)
+    expect(isPrivate('172.16.0.0')).to.equal(true)
+    expect(isPrivate('172.31.255.255')).to.equal(true)
+    expect(isPrivate('192.168.0.0 ')).to.equal(true)
+    expect(isPrivate('10.0.0.1')).to.equal(true)
   })
 })

@@ -88,5 +88,14 @@ export const getIPClass = n => {
   return 'C';
 }
 
+const convertIPtoInt = ip => parseInt(encodeIP(ip), 2);
 
- 
+export const isPrivate = ip => {
+  const ipInt = convertIPtoInt(ip);
+  for (const set of privateIP) {
+    if (ipInt >= convertIPtoInt(set.start) && ipInt <= convertIPtoInt(set.end)) {
+      return true;
+    }
+  }
+  return false;
+}
