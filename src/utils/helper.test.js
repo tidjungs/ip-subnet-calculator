@@ -163,9 +163,19 @@ describe('test all posible header', () => {
 })
 
 describe('test all posiblie network', () => {
-  it('should correct address', () => {
-    // const list = getAllPosibleList('158.108.1.1', 31)
-   
+  it('should length of list', () => {
+    expect(getAllPosibleList('158.108.1.1', 1).length).to.equal(2)
+    expect(getAllPosibleList('158.108.1.1', 2).length).to.equal(4)
+    expect(getAllPosibleList('158.108.1.1', 3).length).to.equal(8)
+    expect(getAllPosibleList('158.108.1.1', 4).length).to.equal(16)
+    expect(getAllPosibleList('158.108.1.1', 7).length).to.equal(128) 
+    expect(getAllPosibleList('158.108.1.1', 8).length).to.equal(1)        
+    expect(getAllPosibleList('158.108.1.1', 15).length).to.equal(128)        
+    expect(getAllPosibleList('158.108.1.1', 16).length).to.equal(1)        
+    expect(getAllPosibleList('158.108.1.1', 23).length).to.equal(128)        
+    expect(getAllPosibleList('158.108.1.1', 24).length).to.equal(1)        
+    expect(getAllPosibleList('158.108.1.1', 31).length).to.equal(128)        
+    expect(getAllPosibleList('158.108.1.1', 31).length).to.equal(128)        
   })
 })
 
@@ -175,6 +185,7 @@ describe('test prefix', () => {
     expect(getPrefixIP('158.108.1.1', 8)).to.equal('10011110')    
     expect(getPrefixIP('158.108.1.1', 16)).to.equal('1001111001101100')
     expect(getPrefixIP('158.108.1.1', 24)).to.equal('100111100110110000000001')
-    expect(getPrefixIP('158.108.1.1', 32)).to.equal('100111100110110000000001')                
+    expect(getPrefixIP('158.108.1.1', 32)).to.equal('100111100110110000000001')
   })
 })
+

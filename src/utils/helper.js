@@ -151,24 +151,18 @@ export const getPrefixIP = (ip, subnet) => {
 }
 
 export const getAllPosibleList = (ip, subnet) => {
-  // if (subnet < 8) {
-    
-  // } else if (subnet < 16) {
-
-  // }
-
+  const prefix = getPrefixIP(ip, subnet);
   const list = [];
-  getAllBinaryFromBit(subnet%8, '', list);
-  const address = list.map(num => decodeIP(num + '0'.repeat(32 - num.length)));
-  const broadcast = list.map(num => decodeIP(num + '1'.repeat(32 - num.length)));
-  const useable = list.map(num => {
+  getAllBinaryFromBit(subnet%8, prefix, list);
+  const posibleList = list.map(num => {
     const startInt = parseInt(num + '0'.repeat(32 - num.length), 2);
     const endInt = parseInt(num + '1'.repeat(32 - num.length), 2);
-    if (endInt - startInt < 2) {
-      return 'None';
+    return {
+      address: decodeIP(num + '0'.repeat(32 - num.length)),
+      useable: endInt - startInt < 2 ? 'None' : 
+        decodeIP((startInt+1).toString(2)) + ' - ' + decodeIP((endInt-1).toString(2)),
+      broadcast: decodeIP(num + '1'.repeat(32 - num.length))
     }
-    return decodeIP((startInt+1).toString(2)) + ' - ' + decodeIP((endInt-1).toString(2));
-  })
-  console.log(address, useable ,broadcast)
-  return address;
+  });
+  return posibleList;
 }
