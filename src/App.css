@@ -1,9 +1,23 @@
 .container {
   margin-top: 20px;
   text-align: center;
+  display: flex;
+  flex-direction: column;
 }
 
-.ant-input {
+h1 {
+  margin-bottom: 16px;
+}
+
+.ant-input, .ant-select {
   width: 200px;
-  margin: 16px 16px 16px 16px;
+}
+
+.title {
+  margin-right: 16px;
+}
+
+.group {
+  margin-top: 8px;
+  margin-bottom: 8px;
 }
