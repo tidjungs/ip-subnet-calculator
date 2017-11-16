@@ -117,4 +117,14 @@ export const getResult = (ip, subnet) => [
   { name: 'Binary ID', value: encodeIP(ip) },
   { name: 'Integer ID', value: parseInt(encodeIP(ip), 2) },
   { name: 'Hex ID', value: parseInt(encodeIP(ip), 2).toString(16) }
-]
+];
+
+export const getAllPosibleHeader = (ip, subnet) => {
+  if (subnet < 8) {
+    return 'All Possible /' + subnet + ' Networks'
+  } 
+  const si = subnet !== 32 ? Math.floor((subnet-8)/8) : 2;
+  const ipList = ip.split('.').map((num, index) => index > si ? '*' : num)  
+  return 'All Possible /' + subnet + ' Networks for ' + ipList.join('.')
+}
+

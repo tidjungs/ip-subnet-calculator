@@ -10,7 +10,8 @@ import { plus,
   getWildCardMask,
   getBinarySubnetMask,
   getIPClass,
-  isPrivate, } from './helper';
+  isPrivate,
+  getAllPosibleHeader, } from './helper';
 
 describe('test plus', () => {
   it('should plus number', () => {
@@ -149,3 +150,13 @@ describe('private ip', () => {
     expect(isPrivate('10.0.0.1')).to.equal(true)
   })
 })
+
+describe('test all posible header', () => {
+  it('should correct header', () => {
+    expect(getAllPosibleHeader('158.108.1.1', 1)).to.equal('All Possible /1 Networks')
+    expect(getAllPosibleHeader('158.108.1.1', 8)).to.equal('All Possible /8 Networks for 158.*.*.*')
+    expect(getAllPosibleHeader('158.108.1.1', 16)).to.equal('All Possible /16 Networks for 158.108.*.*')
+    expect(getAllPosibleHeader('158.108.1.1', 24)).to.equal('All Possible /24 Networks for 158.108.1.*')    
+  })
+})
+
