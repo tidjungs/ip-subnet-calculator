@@ -10,7 +10,7 @@ import { plus,
   getWildCardMask,
   getBinarySubnetMask,
   getIPClass,
-  isPrivate } from './helper';
+  isPrivate, } from './helper';
 
 describe('test plus', () => {
   it('should plus number', () => {

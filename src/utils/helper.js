@@ -99,3 +99,22 @@ export const isPrivate = ip => {
   }
   return false;
 }
+
+export const getResult = (ip, subnet) => [
+  { name: 'IP Address', value: ip },
+  { name: 'Network Address', value: getNetWorkAddress(ip, subnet) },
+  { name: 'Usable Host IP Range', value: getUsableNetworkIPRange(ip, subnet) },
+  { name: 'Broadcast Address', value: getBroadcastAddress(ip, subnet) },
+  { name: 'Total Number of Hosts', value: getNumberOfHost(ip, subnet) },
+  { name: 'Number of Usable Hosts', value: getUsableNumberOfHost(getNumberOfHost(ip, subnet)) },
+  { name: 'Subnet Mask', value: convertToSubnet(subnet) },
+  { name: 'Wildcard Mask', value: getWildCardMask(subnet) },
+  { name: 'Binary Subnet Mask', value: getBinarySubnetMask(subnet) },
+  { name: 'IP Class', value: getIPClass(subnet) },
+  { name: 'CIDR Notation', value: '/' + subnet },
+  { name: 'IP Type', value: isPrivate(ip) ? 'Private' : 'Public' },
+  { name: 'Short', value: ip + '/' + subnet },
+  { name: 'Binary ID', value: encodeIP(ip) },
+  { name: 'Integer ID', value: parseInt(encodeIP(ip), 2) },
+  { name: 'Hex ID', value: parseInt(encodeIP(ip), 2).toString(16) }
+]
