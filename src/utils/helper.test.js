@@ -136,3 +136,9 @@ describe('getIPClass', () => {
     expect(getIPClass(24)).to.equal('C')    
   })
 })
+
+describe('private ip', () => {
+  it('should correct private ip', () => {
+    
+  })
+})

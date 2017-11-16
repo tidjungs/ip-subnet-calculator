@@ -1,3 +1,10 @@
+const map = { 'ANY': 0, 'A': 7, 'B': 15, 'C': 23 };
+const privateIP = [
+  { start: '10.0.0.0', end: '10.255.255.255' },
+  { start: '172.16.0.0', end: '172.31.255.255' },
+  { start: '192.168.0.0', end: '192.168.255.255' },  
+];
+
 export const plus = (x, y) => x + y;
 
 export const convertToSubnet = n => 
@@ -5,7 +12,6 @@ export const convertToSubnet = n =>
     parseInt(('1'.repeat(n) + '0'.repeat(32 - n)
   ).substr(i, 8), 2)).join('.');
 
-const map = { 'ANY': 0, 'A': 7, 'B': 15, 'C': 23 }
 export const generateSubnetByClass = c => 
   new Array(32 - map[c]).fill(0).map(
     (number, index) => convertToSubnet(index+1+map[c]) + ' / ' + (index+1+map[c]))
@@ -81,3 +87,6 @@ export const getIPClass = n => {
   else if (n < 24) return 'B';
   return 'C';
 }
+
+
+ 
