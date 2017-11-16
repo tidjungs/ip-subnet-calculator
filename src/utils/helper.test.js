@@ -11,7 +11,9 @@ import { plus,
   getBinarySubnetMask,
   getIPClass,
   isPrivate,
-  getAllPosibleHeader, } from './helper';
+  getAllPosibleHeader,
+  getAllPosibleList,
+  getPrefixIP } from './helper';
 
 describe('test plus', () => {
   it('should plus number', () => {
@@ -160,3 +162,19 @@ describe('test all posible header', () => {
   })
 })
 
+describe('test all posiblie network', () => {
+  it('should correct address', () => {
+    // const list = getAllPosibleList('158.108.1.1', 31)
+   
+  })
+})
+
+describe('test prefix', () => {
+  it('should correct prefix', () => {
+    expect(getPrefixIP('158.108.1.1', 1)).to.equal('')
+    expect(getPrefixIP('158.108.1.1', 8)).to.equal('10011110')    
+    expect(getPrefixIP('158.108.1.1', 16)).to.equal('1001111001101100')
+    expect(getPrefixIP('158.108.1.1', 24)).to.equal('100111100110110000000001')
+    expect(getPrefixIP('158.108.1.1', 32)).to.equal('100111100110110000000001')                
+  })
+})

@@ -128,3 +128,47 @@ export const getAllPosibleHeader = (ip, subnet) => {
   return 'All Possible /' + subnet + ' Networks for ' + ipList.join('.')
 }
 
+export const getAllBinaryFromBit = (subnet, str, list) => {
+  if (subnet === 0) {
+    list.push(str);
+  } else {
+    getAllBinaryFromBit(subnet-1, str+'0', list);
+    getAllBinaryFromBit(subnet-1, str+'1', list);
+  }
+}
+
+export const getPrefixIP = (ip, subnet) => {
+  const prenet = subnet !== 32 ? subnet : 31;
+  let str = '';
+  ip.split('.').map((sub, index) => {
+    if (index < parseInt(prenet/8)) {
+      const subbi = (+sub).toString(2);
+      str += '0'.repeat(8 - subbi.length);      
+      str += subbi;
+    }
+  });
+  return str;
+}
+
+export const getAllPosibleList = (ip, subnet) => {
+  // if (subnet < 8) {
+    
+  // } else if (subnet < 16) {
+
+  // }
+
+  const list = [];
+  getAllBinaryFromBit(subnet%8, '', list);
+  const address = list.map(num => decodeIP(num + '0'.repeat(32 - num.length)));
+  const broadcast = list.map(num => decodeIP(num + '1'.repeat(32 - num.length)));
+  const useable = list.map(num => {
+    const startInt = parseInt(num + '0'.repeat(32 - num.length), 2);
+    const endInt = parseInt(num + '1'.repeat(32 - num.length), 2);
+    if (endInt - startInt < 2) {
+      return 'None';
+    }
+    return decodeIP((startInt+1).toString(2)) + ' - ' + decodeIP((endInt-1).toString(2));
+  })
+  console.log(address, useable ,broadcast)
+  return address;
+}
