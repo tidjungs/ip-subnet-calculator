@@ -3,20 +3,41 @@ import {
   Input,
   Icon,
   Radio,
-  Select
+  Select,
+  Button,
+  Table,
+  message
 } from 'antd';
 
-import { generateSubnetByClass } from './utils/helper';
+import { generateSubnetByClass, getResult, ipv4 } from './utils/helper';
 import './App.css';
 
 const RadioGroup = Radio.Group;
 const Option = Select.Option;
 
+const columns = [{
+  title: 'Name',
+  dataIndex: 'name',
+  key: 'name',
+}, {
+  title: 'Value',
+  dataIndex: 'value',
+  key: 'value',
+}];
+
+const info = () => {
+  message.config({ duration: 1, });
+  message.error('cannot calculate!');
+};
+
+
 class App extends Component {
   state = {
     selectedClass: 'ANY',
-    selectledSubnet: null,    
+    selectledSubnet: null,
     subnets: generateSubnetByClass('ANY'),
+    result: [],
+    ip: { val: '', err: false },
   }
   
   onClassChange = e => {
@@ -28,13 +49,31 @@ class App extends Component {
 
   onSubnetChange = subnet => {
     this.setState({
-      selectledSubnet: +subnet.slice(-2)
+      selectledSubnet: +subnet.slice(-2),
     })
   }
 
+  onIPChange = e => {
+    const { value } = e.target;
+    this.setState({
+      ip: { val: value, err: !ipv4(value) && value !== '' },
+    });
+  }
+
+  onSubmitCalculate = () => {
+    const { ip, selectledSubnet } = this.state;
+    
+    if (selectledSubnet === null || ip.val === '' || ip.err) {
+      return info()
+    }
+
+    this.setState({
+      result: getResult(ip.val, selectledSubnet),
+    });
+  }
+
   render() {
-    const { selectedClass, selectledSubnet, subnets } = this.state;
-    console.log(selectledSubnet)
+    const { selectedClass, selectledSubnet, subnets, result, ip } = this.state;
     return (
       <div className="container">
         <h1>IP Subnet Calcultor <Icon type="calculator" /></h1>
@@ -63,7 +102,20 @@ class App extends Component {
         </div>
         <div className="group">
           <label className="title">IP Address</label>
-          <Input placeholder="IP Address" />
+          <Input placeholder="IP Address" onChange={this.onIPChange} value={ip.val} />
+        </div>
+        { ip.err && <label className="errMessage">invalid ipv4</label> }
+        <div className="group">
+          <Button 
+            type="primary" 
+            style={{ width: 280 }} 
+            onClick={this.onSubmitCalculate}
+          >
+            Calculate
+          </Button>
+        </div>
+        <div className="group">
+          <Table dataSource={result} columns={columns} pagination={false}></Table>
         </div>
       </div>
     );
