@@ -142,10 +142,10 @@ class App extends Component {
         </div>
         
         <Tabs defaultActiveKey="1">
-          <TabPane tab="Result" key="1">
+          <TabPane tab={<span><Icon type="file" />Result</span>} key="1">
             <Table dataSource={result} columns={columns} pagination={false}></Table>
           </TabPane>
-          <TabPane tab="All Possible Network" key="2">
+          <TabPane tab={<span><Icon type="bars" />All Possible Network</span>} key="2">
             <h2>{header}</h2>
             <div className="group">
               <Table dataSource={allPosible} columns={possibleColumns} pagination={true}></Table>
