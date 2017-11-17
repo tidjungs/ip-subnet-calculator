@@ -9,7 +9,7 @@ import {
   message
 } from 'antd';
 
-import { generateSubnetByClass, getResult, ipv4, getAllPosibleList } from './utils/helper';
+import { generateSubnetByClass, getResult, ipv4, getAllPosibleList, getAllPosibleHeader } from './utils/helper';
 import './App.css';
 
 const RadioGroup = Radio.Group;
@@ -84,7 +84,8 @@ class App extends Component {
 
     this.setState({
       result: getResult(ip.val, selectledSubnet),
-      allPosible: getAllPosibleList(ip.val, selectledSubnet)
+      allPosible: getAllPosibleList(ip.val, selectledSubnet),
+      header: getAllPosibleHeader(ip.val, selectledSubnet)
     });
   }
 
@@ -94,7 +95,8 @@ class App extends Component {
       subnets, 
       result, 
       ip,
-      allPosible } = this.state;
+      allPosible,
+      header } = this.state;
 
     return (
       <div className="container">
@@ -138,6 +140,9 @@ class App extends Component {
         </div>
         <div className="group">
           <Table dataSource={result} columns={columns} pagination={false}></Table>
+        </div>
+        <div className="group">
+          <h1>{header}</h1>
         </div>
         <div className="group">
           <Table dataSource={allPosible} columns={possibleColumns} pagination={true}></Table>
