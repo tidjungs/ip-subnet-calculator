@@ -6,7 +6,8 @@ import {
   Select,
   Button,
   Table,
-  message
+  message,
+  Tabs
 } from 'antd';
 
 import { generateSubnetByClass, getResult, ipv4, getAllPosibleList, getAllPosibleHeader } from './utils/helper';
@@ -14,6 +15,7 @@ import './App.css';
 
 const RadioGroup = Radio.Group;
 const Option = Select.Option;
+const TabPane = Tabs.TabPane;
 
 const columns = [{
   title: 'Name',
@@ -138,15 +140,18 @@ class App extends Component {
             Calculate
           </Button>
         </div>
-        <div className="group">
-          <Table dataSource={result} columns={columns} pagination={false}></Table>
-        </div>
-        <div className="group">
-          <h1>{header}</h1>
-        </div>
-        <div className="group">
-          <Table dataSource={allPosible} columns={possibleColumns} pagination={true}></Table>
-        </div>
+        
+        <Tabs defaultActiveKey="1">
+          <TabPane tab="Result" key="1">
+            <Table dataSource={result} columns={columns} pagination={false}></Table>
+          </TabPane>
+          <TabPane tab="All Possible Network" key="2">
+            <h2>{header}</h2>
+            <div className="group">
+              <Table dataSource={allPosible} columns={possibleColumns} pagination={true}></Table>
+            </div>
+          </TabPane>
+        </Tabs>
       </div>
     );
   }

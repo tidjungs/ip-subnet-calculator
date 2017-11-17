@@ -117,7 +117,7 @@ export const getResult = (ip, subnet) => [
   { name: 'Binary ID', value: encodeIP(ip) },
   { name: 'Integer ID', value: parseInt(encodeIP(ip), 2) },
   { name: 'Hex ID', value: parseInt(encodeIP(ip), 2).toString(16) }
-];
+].map(obj => ({ ...obj, key: obj.name }));
 
 export const getAllPosibleHeader = (ip, subnet) => {
   if (subnet < 8) {
@@ -158,6 +158,7 @@ export const getAllPosibleList = (ip, subnet) => {
     const startInt = parseInt(num + '0'.repeat(32 - num.length), 2);
     const endInt = parseInt(num + '1'.repeat(32 - num.length), 2);
     return {
+      key: num,
       address: decodeIP(num + '0'.repeat(32 - num.length)),
       useable: endInt - startInt < 2 ? 'None' : 
         decodeIP((startInt+1).toString(2)) + ' - ' + decodeIP((endInt-1).toString(2)),
