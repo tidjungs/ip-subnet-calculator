@@ -9,7 +9,7 @@ import {
   message
 } from 'antd';
 
-import { generateSubnetByClass, getResult, ipv4 } from './utils/helper';
+import { generateSubnetByClass, getResult, ipv4, getAllPosibleList } from './utils/helper';
 import './App.css';
 
 const RadioGroup = Radio.Group;
@@ -25,6 +25,20 @@ const columns = [{
   key: 'value',
 }];
 
+const possibleColumns = [{
+  title: 'Network Address',
+  dataIndex: 'address',
+  key: 'address',
+}, {
+  title: 'Usable Host Range	',
+  dataIndex: 'useable',
+  key: 'useable',
+}, {
+  title: 'Broadcast Address',
+  dataIndex: 'broadcast',
+  key: 'broadcast',
+}]
+
 const info = () => {
   message.config({ duration: 1, });
   message.error('cannot calculate!');
@@ -37,6 +51,7 @@ class App extends Component {
     selectledSubnet: null,
     subnets: generateSubnetByClass('ANY'),
     result: [],
+    allPosible: [],
     ip: { val: '', err: false },
   }
   
@@ -69,11 +84,18 @@ class App extends Component {
 
     this.setState({
       result: getResult(ip.val, selectledSubnet),
+      allPosible: getAllPosibleList(ip.val, selectledSubnet)
     });
   }
 
   render() {
-    const { selectedClass, selectledSubnet, subnets, result, ip } = this.state;
+    const { selectedClass, 
+      selectledSubnet, 
+      subnets, 
+      result, 
+      ip,
+      allPosible } = this.state;
+
     return (
       <div className="container">
         <h1>IP Subnet Calcultor <Icon type="calculator" /></h1>
@@ -116,6 +138,9 @@ class App extends Component {
         </div>
         <div className="group">
           <Table dataSource={result} columns={columns} pagination={false}></Table>
+        </div>
+        <div className="group">
+          <Table dataSource={allPosible} columns={possibleColumns} pagination={true}></Table>
         </div>
       </div>
     );
